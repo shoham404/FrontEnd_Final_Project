@@ -105,8 +105,7 @@ export default function ReceiptDialog({ open, onClose, costs, month, year }) {
                         <Box key={category} sx={{ marginBottom: "15px", paddingBottom: "10px", borderBottom: "1px dashed #737373", textAlign: "left" }}>
                             <Typography sx={{ fontSize: "14px", fontWeight: "bold" }}>Category: {category}</Typography>
                             {/* Checking if there are expenses in the category */}
-                            {groupedCosts[category].length > 0 ? (
-                                groupedCosts[category].map((cost, index) => (
+                            {groupedCosts[category].length > 0 ? (groupedCosts[category].map((cost, index) => (
                                     <Fade in={true} timeout={300 + index * 150} key={index}>
                                         <Box sx={{ marginBottom: "10px" }}>
                                             <Typography sx={{ fontSize: "14px" }}>Description: {cost.description}</Typography>
