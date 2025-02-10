@@ -12,40 +12,40 @@ export default function ReceiptDialog({ open, onClose, costs, month, year }) {
 
     useEffect(() => {
         if (open && receiptRef.current) {
-            receiptRef.current.scrollTop = 0; // מבטיח שהקבלה תתחיל מהחלק העליון בכל פתיחה
+            receiptRef.current.scrollTop = 0;
         }
     }, [open]);
 
-    // פונקציה לשמירת הדוח כ-PDF
+
     const handleDownloadPDF = () => {
         const doc = new jsPDF();
 
-        // טוענים לוגו
-        const logo = "/fac.ico"; // יש להמיר ל-PNG אם יש בעיה עם ה-ICO
-        doc.addImage(logo, "PNG", 20, 10, 30, 30); // (image, type, x, y, width, height)
+
+        const logo = "/fac.ico";
+        doc.addImage(logo, "PNG", 20, 10, 30, 30);
 
         doc.setFont("courier", "normal");
 
-        // כותרת הדוח
+
         doc.text(`Monthly Expense Report`, 20, 50);
         doc.text(`${new Date(0, month - 1).toLocaleString("en-US", { month: "long" })} ${year}`, 20, 60);
         doc.line(20, 65, 190, 65); // קו הפרדה
 
-        let y = 75; // מיקום התחלת הטבלה
+        let y = 75;
         costs.forEach((cost, index) => {
             doc.text(`Category: ${cost.category}`, 20, y);
             doc.text(`Description: ${cost.description}`, 20, y + 10);
             doc.text(`Amount: $${cost.sum}`, 20, y + 20);
             doc.text(`Date: ${new Date(cost.date).toLocaleDateString()}`, 20, y + 30);
-            doc.line(20, y + 35, 190, y + 35); // קו הפרדה
-            y += 45; // ממשיכים לשורה הבאה
+            doc.line(20, y + 35, 190, y + 35);
+            y += 45;
         });
 
-        // סכום כולל
+
         doc.setFont("courier", "bold");
         doc.text(`Total: $${costs.reduce((sum, cost) => sum + Number(cost.sum), 0).toFixed(2)}`, 20, y + 10);
 
-        // הורדת הקובץ
+
         doc.save(`Expense_Report_${month}_${year}.pdf`);
     };
 
@@ -68,7 +68,7 @@ export default function ReceiptDialog({ open, onClose, costs, month, year }) {
                         overflowY: "auto",
                     }}
                 >
-                    {/* הוספת לוגו בראש הקבלה */}
+                    {}
                     <Box sx={{ textAlign: "center", mb: 2 }}>
                         <img src="/fac.ico" alt="Logo" style={{ width: "60px", height: "60px" }} />
                         <Typography variant="subtitle2" sx={{ fontStyle: "italic", color: "#888" }}>

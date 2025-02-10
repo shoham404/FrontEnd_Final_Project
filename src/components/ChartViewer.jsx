@@ -23,18 +23,18 @@ export default function ChartViewer() {
     // אפשרויות עיצוב
     const options = {
         title: "Cost Distribution",
-        is3D: true, // הפעלת תלת-ממד
-        pieHole: 0.4, // שינוי לצורת Doughnut (אם תרצי)
+        is3D: true,
+        pieHole: 0.4,
         slices: {
-            0: { color: "#1E88E5" }, // כחול
-            1: { color: "#D32F2F" }, // אדום
-            2: { color: "#FFC107" }, // צהוב
-            3: { color: "#43A047" }, // ירוק
+            0: { color: "#1E88E5" },
+            1: { color: "#D32F2F" },
+            2: { color: "#FFC107" },
+            3: { color: "#43A047" },
         },
         legend: { position: "bottom", alignment: "center", textStyle: { fontSize: 14 } },
-        pieSliceText: "percentage", // הצגת אחוזים על כל פרוסה
-        chartArea: { width: "90%", height: "80%" }, // התאמת שטח הגרף
-        animation: { startup: true, duration: 1000, easing: "out" }, // אנימציה בטעינה
+        pieSliceText: "percentage",
+        chartArea: { width: "90%", height: "80%" },
+        animation: { startup: true, duration: 1000, easing: "out" },
     };
 
     return (

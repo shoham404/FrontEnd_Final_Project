@@ -54,7 +54,7 @@ export default function ReportViewer() {
                     textTransform: "uppercase",
                     transition: "0.3s",
                     "&:hover": {
-                        transform: "scale(1.05)", // אפקט התקרבות לכפתור בלחיצה
+                        transform: "scale(1.05)",
                     }
                 }}
             >

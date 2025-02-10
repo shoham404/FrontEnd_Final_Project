@@ -7,7 +7,7 @@ export default function CostForm() {
         sum: "",
         category: "",
         description: "",
-        date: new Date().toISOString().split("T")[0], // ברירת מחדל להיום
+        date: new Date().toISOString().split("T")[0],
     });
 
     const handleChange = (e) => {
@@ -15,15 +15,27 @@ export default function CostForm() {
     };
 
     const handleSubmit = async () => {
-        await addCostToDB(formData);
-        setFormData({
-            sum: "",
-            category: "",
-            description: "",
-            date: new Date().toISOString().split("T")[0],
-        });
-        alert("Cost added successfully!");
+        if (isNaN(formData.sum) || Number(formData.sum) <= 0) {
+            alert("❌ Error: Sum must be a positive number.");
+            return;
+        }
+
+        try {
+            await addCostToDB(formData);
+            setFormData({
+                sum: "",
+                category: "",
+                description: "",
+                date: new Date().toISOString().split("T")[0],
+            });
+            alert("✅ Cost added successfully!");
+        } catch (error) {
+            alert(`❌ Error adding cost: ${error.message}`);
+            console.error("Failed to add cost:", error);
+        }
     };
+
+
 
     return (
         <Paper elevation={6} sx={{ p: 4, borderRadius: "15px", backgroundColor: "#ffffff" }}>
