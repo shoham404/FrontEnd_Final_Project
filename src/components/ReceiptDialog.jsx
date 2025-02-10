@@ -2,7 +2,6 @@ import React, { useEffect, useRef } from "react";
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Typography, Box, Slide, Fade } from "@mui/material";
 import { jsPDF } from "jspdf";
 
-
 const Transition = React.forwardRef((props, ref) => (
     <Slide direction="up" ref={ref} {...props} />
 ));
@@ -16,35 +15,48 @@ export default function ReceiptDialog({ open, onClose, costs, month, year }) {
         }
     }, [open]);
 
+    // קיבוץ ההוצאות לפי קטגוריות
+    const categories = ["Food", "Transport", "Entertainment"];
+    const groupedCosts = categories.reduce((acc, category) => {
+        acc[category] = costs.filter(cost => cost.category === category);
+        return acc;
+    }, {});
 
     const handleDownloadPDF = () => {
         const doc = new jsPDF();
-
 
         const logo = "/fac.ico";
         doc.addImage(logo, "PNG", 20, 10, 30, 30);
 
         doc.setFont("courier", "normal");
-
-
         doc.text(`Monthly Expense Report`, 20, 50);
         doc.text(`${new Date(0, month - 1).toLocaleString("en-US", { month: "long" })} ${year}`, 20, 60);
-        doc.line(20, 65, 190, 65); // קו הפרדה
+        doc.line(20, 65, 190, 65);
 
         let y = 75;
-        costs.forEach((cost, index) => {
-            doc.text(`Category: ${cost.category}`, 20, y);
-            doc.text(`Description: ${cost.description}`, 20, y + 10);
-            doc.text(`Amount: $${cost.sum}`, 20, y + 20);
-            doc.text(`Date: ${new Date(cost.date).toLocaleDateString()}`, 20, y + 30);
-            doc.line(20, y + 35, 190, y + 35);
-            y += 45;
-        });
 
+        categories.forEach(category => {
+            doc.setFont("courier", "bold");
+            doc.text(`Category: ${category}`, 20, y);
+            y += 10;
+
+            if (groupedCosts[category].length > 0) {
+                groupedCosts[category].forEach(cost => {
+                    doc.setFont("courier", "normal");
+                    doc.text(`Description: ${cost.description}`, 20, y);
+                    doc.text(`Amount: $${cost.sum}`, 20, y + 10);
+                    doc.text(`Date: ${new Date(cost.date).toLocaleDateString()}`, 20, y + 20);
+                    doc.line(20, y + 25, 190, y + 25);
+                    y += 35;
+                });
+            } else {
+                doc.text("No expenses", 20, y);
+                y += 15;
+            }
+        });
 
         doc.setFont("courier", "bold");
         doc.text(`Total: $${costs.reduce((sum, cost) => sum + Number(cost.sum), 0).toFixed(2)}`, 20, y + 10);
-
 
         doc.save(`Expense_Report_${month}_${year}.pdf`);
     };
@@ -68,7 +80,6 @@ export default function ReceiptDialog({ open, onClose, costs, month, year }) {
                         overflowY: "auto",
                     }}
                 >
-                    {}
                     <Box sx={{ textAlign: "center", mb: 2 }}>
                         <img src="/fac.ico" alt="Logo" style={{ width: "60px", height: "60px" }} />
                         <Typography variant="subtitle2" sx={{ fontStyle: "italic", color: "#888" }}>
@@ -83,20 +94,24 @@ export default function ReceiptDialog({ open, onClose, costs, month, year }) {
                         Breakdown of expenses recorded for {new Date(0, month - 1).toLocaleString("en-US", { month: "long" })} {year}
                     </Typography>
 
-                    {costs.length > 0 ? (
-                        costs.map((cost, index) => (
-                            <Fade in={true} timeout={300 + index * 150} key={index}>
-                                <Box sx={{ marginBottom: "15px", paddingBottom: "10px", borderBottom: "1px dashed #737373", textAlign: "left" }}>
-                                    <Typography sx={{ fontSize: "14px", fontWeight: "bold" }}>Category: {cost.category}</Typography>
-                                    <Typography sx={{ fontSize: "14px" }}>Description: {cost.description}</Typography>
-                                    <Typography sx={{ fontSize: "14px", fontWeight: "bold" }}>Amount: ${cost.sum}</Typography>
-                                    <Typography sx={{ fontSize: "12px", color: "gray" }}>Date: {new Date(cost.date).toLocaleDateString()}</Typography>
-                                </Box>
-                            </Fade>
-                        ))
-                    ) : (
-                        <Typography>No transactions found</Typography>
-                    )}
+                    {categories.map(category => (
+                        <Box key={category} sx={{ marginBottom: "15px", paddingBottom: "10px", borderBottom: "1px dashed #737373", textAlign: "left" }}>
+                            <Typography sx={{ fontSize: "14px", fontWeight: "bold" }}>Category: {category}</Typography>
+                            {groupedCosts[category].length > 0 ? (
+                                groupedCosts[category].map((cost, index) => (
+                                    <Fade in={true} timeout={300 + index * 150} key={index}>
+                                        <Box sx={{ marginBottom: "10px" }}>
+                                            <Typography sx={{ fontSize: "14px" }}>Description: {cost.description}</Typography>
+                                            <Typography sx={{ fontSize: "14px", fontWeight: "bold" }}>Amount: ${cost.sum}</Typography>
+                                            <Typography sx={{ fontSize: "12px", color: "gray" }}>Date: {new Date(cost.date).toLocaleDateString()}</Typography>
+                                        </Box>
+                                    </Fade>
+                                ))
+                            ) : (
+                                <Typography sx={{ fontSize: "14px", color: "gray" }}>No expenses</Typography>
+                            )}
+                        </Box>
+                    ))}
 
                     <Box sx={{ marginTop: "20px", textAlign: "left" }}>
                         <Box sx={{ display: "flex", justifyContent: "space-between", fontSize: "14px", fontWeight: "bold", borderTop: "1px dashed #737373", marginTop: "10px", paddingTop: "5px" }}>
@@ -117,5 +132,3 @@ export default function ReceiptDialog({ open, onClose, costs, month, year }) {
         </Dialog>
     );
 }
-
-
