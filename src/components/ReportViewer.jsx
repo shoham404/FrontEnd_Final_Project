@@ -9,12 +9,13 @@ export default function ReportViewer() {
     const [costs, setCosts] = useState([]);
     const [openReceipt, setOpenReceipt] = useState(false);
 
+    const fetchCosts = async () => {
+        const data = await getCostsByMonth(month, year);
+        setCosts(data);
+    };
+
     useEffect(() => {
-        const fetchCosts = async () => {
-            const data = await getCostsByMonth(month, year);
-            setCosts(data);
-        };
-        fetchCosts();
+        fetchCosts(); // טוען נתונים ראשוניים כשהחודש/שנה משתנים
     }, [month, year]);
 
     return (
@@ -48,7 +49,10 @@ export default function ReportViewer() {
                 variant="contained"
                 color="primary"
                 fullWidth
-                onClick={() => setOpenReceipt(true)}
+                onClick={async () => {
+                    await fetchCosts();
+                    setOpenReceipt(true);
+                }}
                 sx={{
                     fontWeight: "bold",
                     textTransform: "uppercase",
