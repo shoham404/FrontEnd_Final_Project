@@ -58,7 +58,7 @@ export default function ReportViewer() {
                     }
                 }}
             >
-                View Receipt
+                View Report
             </Button>
 
             <ReceiptDialog open={openReceipt} onClose={() => setOpenReceipt(false)} costs={costs} month={month} year={year} />
