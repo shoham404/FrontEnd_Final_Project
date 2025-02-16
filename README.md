@@ -1,5 +1,5 @@
 # 💰 Cost Manager Application
-
+.
 ___
 
 ## 📌 Overview
