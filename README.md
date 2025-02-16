@@ -57,7 +57,7 @@ npm run dev
 ```
 The API will be available at http://localhost:Port_Number/.
 You can see the port number via the terminal.
----
+
 
 ## 📡 Application Components
 
