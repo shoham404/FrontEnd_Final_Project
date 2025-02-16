@@ -29,25 +29,11 @@ The project is built using modern web development technologies:
 
 ---
 
-## 📂 Project Structure
-```
-📂 Project/
- ├── 📁 public/          # Contain the site favicon.
- ├── 📁 src/             # Main source files.
-      ├── 📁 components/ # React components (Header, CostForm, ReportViewer, ChartViewer, ReceiptDialog).
-      ├── 📄  App.js      #  Main application layout.
-      ├── 📄  idb.js      #  IndexedDB utility functions
- ├── .env.example        # Example environment variables
- ├── README.md         # Project documentation
-```
-
----
-
 ## 🚀 Getting Started
 To set up and run this project, you need to install all required dependencies. Follow these steps:
 #### 1️⃣ Clone the repository
 ```
-git clone https://github.com/shoham404/Cost-Manager-REStful-Web-Services.git
+git clone https://github.com/shoham404/FrontEnd_Final_Project.git
 ```
 #### 2️⃣ Install dependencies
 **Install required dependencies:** Run the following command to install all necessary packages:
@@ -57,53 +43,38 @@ npm install
 ##### Ensure the following dependencies are installed:
 **Project dependencies:**
 ```
-npm install express body-parser dotenv mongodb mongoose
+npm install @emotion/react @emotion/styled @fontsource/roboto @mui/icons-material @mui/material jspdf react-google-charts
 ```
-**Development & Testing dependencies:**
+npm install
 ```
-npm install --save-dev jest supertest
+npm install --save-dev
 ```
-### 3️⃣ Set up environment variables
-Create a .env file in the root directory and add the following:
-```
-MONGO_URI=your_mongodb_connection_string
-```
-### 4️⃣ To start the server
-```
-npm start
-```
-The API will be available at http://localhost:3000/.
-### 5️⃣ To run the tests:
-```
-npm test
-```
-#### Tests cover:
-
-* User management
-* Expense handling
-* Report generation
-* Error handling cases
-
 **💡 This ensures all necessary dependencies are installed and properly configured before running the application. 🚀**
 
+### 3️⃣ To start the server
+```
+npm run dev
+```
+The API will be available at http://localhost:Port_Number/.
+You can see the port number via the terminal.
 ---
 
-## 📡 API Endpoints
-### 🧑 User Routes
-| Method | Endpoint | Description |
-|:----------:|:----------:|:----------:|
-| **POST**   | `/api/users/add` | Add a new user |
-| **GET**  | `/api/users/:id`   | Retrieve user details |
+## 📡 Application Components
 
-### 💰 Expense Routes
-| Method | Endpoint | Description |
-|:----------:|:----------:|:-------
-| **POST**   | `/api/add` | Add a new expense |
+### 🧾 Core Application Components
+| Component | Description | 
+|:----------:|:----------:|
+| **App.jsx**   | Main application layout, managing structure and routing. | 
+| **idb.js**  | IndexedDB functions for storing and retrieving expenses. | 
 
-### 📊 Report Routes
-| Method | Endpoint | Description |
-|:----------:|:----------:|:-------
-| **GET**   | `/api/report` | Retrieve a monthly expense report |
+### 📊 Reports & Visualization
+| Component | Description | 
+|:----------:|:----------:|
+| **CostForm.jsx**   | Form for adding new expense entries. | 
+| **Header.jsx**   | Displays the application's navigation bar. | 
+| **ReportViewer.jsx**   | Displays a monthly expense report. | 
+| **ChartViewer.jsx** | Generates a pie chart for expense distribution.| 
+| **ReceiptDialog**   | Responsible for designing the report and the option to save it as a PDF file. |
 
 ---
 
@@ -112,9 +83,9 @@ npm test
 Want to contribute? Follow these steps:
 
 1. **Fork** this repository.
-2. **Create** a new feature branch (git checkout -b feature-branch).
-3. **Commit** changes (git commit -m "Added new feature").
-4. **Push** to GitHub (git push origin feature-branch).
+2. **Create** a new feature branch `git checkout -b feature-branch`.
+3. **Commit** changes `git commit -m "Added new feature"`.
+4. **Push** to GitHub `git push origin feature-branch`.
 5. **Submit** a pull request. 🚀
 
 ---
